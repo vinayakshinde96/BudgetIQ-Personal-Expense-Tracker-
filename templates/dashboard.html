@@ -5,71 +5,239 @@
 
 <style>
 
-body{
-    font-family: Arial;
-    background:#f4f6f9;
-    padding:30px;
+
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: #0f1b2d;
+    min-height: 100vh;
+    padding: 30px 20px;
+    position: relative;
+    overflow-x: hidden;
 }
 
-h1{
-    color:#2c3e50;
+
+body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+        radial-gradient(ellipse at 20% 20%, rgba(39,174,96,0.07) 0%, transparent 55%),
+        radial-gradient(ellipse at 80% 80%, rgba(52,152,219,0.08) 0%, transparent 55%),
+        radial-gradient(ellipse at 60% 10%, rgba(155,89,182,0.05) 0%, transparent 45%);
+    pointer-events: none;
+    z-index: 0;
 }
 
-.container{
-    background:white;
-    padding:20px;
-    border-radius:10px;
-    box-shadow:0 2px 10px rgba(0,0,0,0.1);
+body::after {
+    content: '₹  $  €  ₹  %  $  ↑  ₹  €  $  ↓  ₹  $  %  €  ₹  $  ↑  ₹  €';
+    position: fixed;
+    top: 0; left: 0;
+    width: 200%;
+    font-size: 18px;
+    font-family: monospace;
+    font-weight: 700;
+    color: rgba(79,195,247,0.045);
+    word-spacing: 2.2rem;
+    line-height: 3.8rem;
+    letter-spacing: 1.5rem;
+    pointer-events: none;
+    z-index: 0;
+    white-space: pre-wrap;
+    animation: bgScrollSyms 60s linear infinite;
 }
 
-form input, form select{
-    padding:8px;
-    margin:5px;
+@keyframes bgScrollSyms {
+    0%   { transform: translateY(0); }
+    100% { transform: translateY(-50%); }
 }
 
-button{
-    padding:8px 14px;
-    border:none;
-    border-radius:5px;
-    cursor:pointer;
+
+h1 { color: #e3f2fd; font-size: 26px; margin-bottom: 22px; display: flex; align-items: center; gap: 10px; }
+h1::before { content: '💰'; font-size: 28px; }
+
+h3 {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #90caf9;
+    margin: 24px 0 10px;
 }
 
-.add-btn{
-    background:#27ae60;
-    color:white;
+.container {
+    background: rgba(255,255,255,0.04);
+    padding: 28px 28px;
+    border-radius: 18px;
+    border: 0.5px solid rgba(79,195,247,0.18);
+    position: relative;
+    z-index: 1;
+    max-width: 920px;
+    margin: 0 auto;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
 }
 
-.delete-btn{
-    background:#e74c3c;
-    color:white;
+
+.year-box {
+    margin-top: 0;
+    margin-bottom: 8px;
 }
 
-.report-btn{
-    background:#3498db;
-    color:white;
-    margin:5px;
+.year-box label {
+    font-size: 12px;
+    font-weight: 700;
+    color: #90caf9;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    margin-right: 10px;
 }
 
-table{
-    width:100%;
-    border-collapse:collapse;
-    margin-top:20px;
+
+form input, form select {
+    padding: 9px 13px;
+    margin: 4px;
+    border-radius: 9px;
+    border: 0.5px solid rgba(79,195,247,0.28);
+    background: rgba(255,255,255,0.07);
+    color: #e3f2fd;
+    font-size: 13px;
+    outline: none;
+    transition: border-color 0.2s, background 0.2s;
 }
 
-th,td{
-    padding:10px;
-    border-bottom:1px solid #ddd;
-    text-align:center;
+form input:focus, form select:focus {
+    border-color: rgba(79,195,247,0.65);
+    background: rgba(255,255,255,0.11);
 }
 
-th{
-    background:#34495e;
-    color:white;
+form input::placeholder { color: rgba(180,210,240,0.4); }
+
+form select option { background: #1a2a3a; color: #e3f2fd; }
+
+
+button {
+    padding: 9px 18px;
+    border: none;
+    border-radius: 9px;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 600;
+    transition: filter 0.15s, transform 0.12s;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
 }
 
-.year-box{
-    margin-top:15px;
+button:active { transform: scale(0.97); }
+
+.add-btn {
+    background: linear-gradient(135deg, #27ae60, #1e8449);
+    color: #fff;
+    box-shadow: 0 2px 14px rgba(39,174,96,0.25);
 }
+.add-btn::before { content: '＋'; font-weight: 700; }
+.add-btn:hover { filter: brightness(1.12); }
+
+.delete-btn {
+    background: rgba(231,76,60,0.14);
+    color: #ff8a80;
+    border: 0.5px solid rgba(231,76,60,0.35);
+    padding: 6px 13px;
+    font-size: 12px;
+}
+.delete-btn::before { content: '🗑'; font-size: 11px; }
+.delete-btn:hover { background: rgba(231,76,60,0.28); }
+
+.report-btn {
+    margin: 4px;
+    border: 0.5px solid;
+}
+
+<!--Individual report button colours -->
+a:nth-child(1) .report-btn {
+    background: rgba(52,152,219,0.15);
+    color: #74c7ff;
+    border-color: rgba(52,152,219,0.38);
+}
+a:nth-child(2) .report-btn {
+    background: rgba(155,89,182,0.15);
+    color: #d1a4f7;
+    border-color: rgba(155,89,182,0.38);
+}
+a:nth-child(3) .report-btn {
+    background: rgba(39,174,96,0.15);
+    color: #7ef9ac;
+    border-color: rgba(39,174,96,0.38);
+}
+
+.report-btn:hover { filter: brightness(1.18); transform: translateY(-1px); }
+
+<!--EXPENSE TABLE -->
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+thead tr {
+    background: rgba(79,195,247,0.09);
+}
+
+th {
+    padding: 11px 14px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #90caf9;
+    text-align: center;
+    border-bottom: 0.5px solid rgba(79,195,247,0.22);
+}
+
+td {
+    padding: 12px 14px;
+    font-size: 13px;
+    color: #cfe8ff;
+    text-align: center;
+    border-bottom: 0.5px solid rgba(255,255,255,0.05);
+    transition: background 0.15s;
+}
+
+tbody tr:hover { background: rgba(79,195,247,0.06); }
+
+<!-- Amount column — stands out in green -->
+td:first-child {
+    font-weight: 700;
+    font-family: 'Courier New', monospace;
+    font-size: 14px;
+    color: #7ef9ac;
+}
+
+
+td:nth-child(2) {
+    font-size: 13px;
+    color: #74c7ff;
+}
+td:nth-child(2)::before {
+    content: '';
+}
+
+
+.cat-pill {
+    display: inline-block;
+    padding: 3px 11px;
+    border-radius: 20px;
+    background: rgba(52,152,219,0.18);
+    color: #74c7ff;
+    border: 0.5px solid rgba(52,152,219,0.35);
+    font-size: 12px;
+    font-weight: 600;
+}
+
+<!-- Description / Date — muted -->
+td:nth-child(3), td:nth-child(4) { color: #8aafc8; font-size: 12px; }
 
 </style>
 

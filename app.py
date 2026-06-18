@@ -8,8 +8,8 @@ app.secret_key = "budgetiq_secretkey"
 # ---------------- DATABASE CONNECTION ----------------
 db = mysql.connector.connect(
     host="localhost",
-    user="karan",
-    password="karan@1234",  # 🔴 change this
+    user="root",
+    password="@Karanp3341",  # 🔴 change this
     database="budgetiq"
 )
 
@@ -19,28 +19,13 @@ cursor = db.cursor(dictionary=True, buffered=True)
 def home():
     return redirect('/login')
 
-# ---------------- REGISTER ----------------
-@app.route('/register', methods=['GET', 'POST'])
-def register():
-    if request.method == 'POST':
-        username = request.form.get('username')
-        email = request.form.get('email')
-        password = request.form.get('password')
 
-        sql = "INSERT INTO users (username, email, password) VALUES (%s, %s, %s)"
-        values = (username, email, password)
-
-        cursor.execute(sql, values)
-        db.commit()
-
-        return redirect(url_for('login'))
-
-    return render_template('register.html')
-
-# ---------------- LOGIN ----------------
+# ---------------- login ----------------
 @app.route('/login', methods=['GET', 'POST'])
 def login():
+
     if request.method == 'POST':
+
         username = request.form.get('username')
         password = request.form.get('password')
 
@@ -48,6 +33,7 @@ def login():
             "SELECT * FROM users WHERE email=%s AND password=%s",
             (username, password)
         )
+
         user = cursor.fetchone()
 
         if user:
@@ -55,6 +41,72 @@ def login():
             return redirect('/dashboard')
 
     return render_template('login.html')
+
+# ---------------- REGISTER ----------------
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+
+    message = ""
+
+    if request.method == 'POST':
+
+        username = request.form.get('username')
+        email = request.form.get('email')
+        password = request.form.get('password')
+
+        # Remove extra spaces
+        username = username.strip()
+        email = email.strip()
+        password = password.strip()
+
+        # Password cannot be blank
+        if password == "":
+            return render_template(
+                "register.html",
+                message="❌ Password cannot be empty."
+            )
+
+        # Password must be at least 6 characters
+        if len(password) < 6:
+            return render_template(
+                "register.html",
+                message="❌ Password must be at least 6 characters."
+            )
+
+        # Check if email already exists
+        cursor.execute(
+            "SELECT * FROM users WHERE email=%s",
+            (email,)
+        )
+
+        existing_user = cursor.fetchone()
+
+        if existing_user:
+            return render_template(
+                "register.html",
+                message="❌ Email already exists."
+            )
+
+        # Insert new user
+        cursor.execute(
+            """
+            INSERT INTO users
+            (username, email, password)
+            VALUES (%s, %s, %s)
+            """,
+            (username, email, password)
+        )
+
+        db.commit()
+
+        return redirect('/login')
+
+    return render_template(
+        "register.html",
+        message=message
+    )
+
+
 
 
 # ---------------- DASHBOARD ----------------

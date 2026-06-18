@@ -1,94 +1,226 @@
 <!DOCTYPE html>
+
 <html>
 <head>
-<title>Login</title>
-<style>
+<title>BudgetIQ - Login</title>
 
-/* Page Background */
-body{
+<style>
+*{
     margin:0;
     padding:0;
-    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: linear-gradient(135deg,#1f4037,#99f2c8);
+    box-sizing:border-box;
+    font-family:'Segoe UI',sans-serif;
+}
+
+body{
     height:100vh;
     display:flex;
     justify-content:center;
     align-items:center;
+
+    background:
+    linear-gradient(
+        rgba(0,0,0,0.55),
+        rgba(0,0,0,0.55)
+    ),
+    url('https://images.unsplash.com/photo-1579621970795-87facc2f976d');
+
+    background-size:cover;
+    background-position:center;
+    background-repeat:no-repeat;
 }
 
-/* Login Card */
-.login-container{
-    width:350px;
+/* Glassmorphism Login Card */
+.box{
+    width:400px;
     padding:40px;
-    border-radius:15px;
 
-    background: rgba(255,255,255,0.15);
-    backdrop-filter: blur(10px);
+    background:rgba(255,255,255,0.15);
 
-    box-shadow:0 8px 30px rgba(0,0,0,0.3);
-}
+    backdrop-filter:blur(14px);
+    -webkit-backdrop-filter:blur(14px);
 
-/* Title */
-.login-container h2{
+    border:1px solid rgba(255,255,255,0.2);
+
+    border-radius:20px;
+
+    box-shadow:
+    0 8px 32px rgba(0,0,0,0.35);
+
     text-align:center;
-    margin-bottom:25px;
-    color:white;
+
+    animation:slideUp 0.8s ease;
 }
 
-/* Input fields */
+/* Logo */
+h2{
+    color:white;
+    font-size:34px;
+    margin-bottom:8px;
+}
+
+.subtitle{
+    color:#e8e8e8;
+    margin-bottom:25px;
+    font-size:14px;
+}
+
+/* Inputs */
 input{
     width:100%;
-    padding:12px;
+    padding:14px;
     margin:10px 0;
+
     border:none;
-    border-radius:8px;
+    border-radius:10px;
+
+    background:rgba(255,255,255,0.92);
+
+    font-size:15px;
+}
+
+input:focus{
     outline:none;
-    font-size:14px;
+
+    box-shadow:
+    0 0 15px rgba(76,175,80,0.6);
+
+    transform:scale(1.02);
+
+    transition:0.3s;
+}
+
+/* Password Toggle */
+.password-container{
+    position:relative;
+}
+
+.password-container span{
+    position:absolute;
+    right:15px;
+    top:50%;
+    transform:translateY(-50%);
+    cursor:pointer;
+    font-size:18px;
 }
 
 /* Button */
 button{
     width:100%;
-    padding:12px;
+    padding:14px;
     margin-top:15px;
-
-    background:#ff7e5f;
-    background: linear-gradient(to right,#ff7e5f,#feb47b);
 
     border:none;
-    border-radius:8px;
+    border-radius:10px;
 
+    background:#4CAF50;
     color:white;
+
     font-size:16px;
+    font-weight:bold;
+
     cursor:pointer;
 
-    transition:0.3s;
+    transition:all 0.3s ease;
 }
 
-/* Button Hover */
 button:hover{
-    transform:scale(1.05);
-    box-shadow:0 5px 15px rgba(0,0,0,0.3);
+    background:#388E3C;
+
+    transform:translateY(-3px);
+
+    box-shadow:
+    0 8px 20px rgba(76,175,80,0.45);
 }
 
-/* Small text */
-p{
-    text-align:center;
-    margin-top:15px;
+/* Link */
+a{
     color:white;
+    text-decoration:none;
+    font-weight:600;
 }
 
+a:hover{
+    text-decoration:underline;
+}
+
+.footer{
+    margin-top:18px;
+}
+
+/* Animation */
+@keyframes slideUp{
+    from{
+        opacity:0;
+        transform:translateY(40px);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
 </style>
+
 </head>
 <body>
+
 <div class="box">
-<h2>Login</h2>
+
+```
+<h2>💰 BudgetIQ</h2>
+
+<p class="subtitle">
+    Track Expenses • Save Money • Build Wealth
+</p>
+
 <form method="POST">
-    <input type="text" name="username" placeholder="Enter Username" required>
-    <input type="password" name="password" placeholder="Enter Password" required>
-    <button type="submit">Login</button>
+
+    <input
+        type="text"
+        name="username"
+        placeholder="Enter Email"
+        required>
+
+    <div class="password-container">
+
+        <input
+            type="password"
+            id="password"
+            name="password"
+            placeholder="Enter Password"
+            required>
+
+        <span onclick="togglePassword()">👁️</span>
+
+    </div>
+
+    <button type="submit">
+        Login
+    </button>
+
 </form>
-<a href="/register">Create Account</a>
+
+<div class="footer">
+    <a href="/register">Create Account</a>
 </div>
+```
+
+</div>
+
+<script>
+function togglePassword(){
+
+    let password =
+        document.getElementById("password");
+
+    if(password.type === "password"){
+        password.type = "text";
+    }
+    else{
+        password.type = "password";
+    }
+}
+</script>
+
 </body>
 </html>
