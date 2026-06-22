@@ -40,5 +40,5 @@ BudgetIQ is a full-stack finance management application built with **Python, Fla
 
 ### 👨‍💻 Developed By
 
-**Karan Pawar**
-Aspiring Data Analyst | SQL Developer | Python Enthusiast
+**Vinayak Shinde**
+Aspiring Software Developer | SQL Developer | Python Enthusiast | Java Developer 
